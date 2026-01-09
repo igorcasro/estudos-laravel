@@ -8,11 +8,15 @@ class ClienteControlador extends Controller
 {
     private $clientes = [
         ['id' => 1, 'nome' => 'Ademir'],
-        ['id' => 2, 'nome' => 'José'],
-        ['id' => 3, 'nome' => 'Eduardo'],
-        ['id' => 4, 'nome' => 'Renato'],
-        ['id' => 5, 'nome' => 'Camilo'],
+        ['id' => 2, 'nome' => 'José']
     ];
+
+    public function __construct()
+    {
+        $clientes = session('clientes');
+        if (!isset($clientes))
+            session(['clientes' => $this->clientes]);
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,8 +25,9 @@ class ClienteControlador extends Controller
      */
     public function index()
     {
-        $clientes = $this->clientes;
+        $clientes = session('clientes');
         // A utilização do compact é para compactar tudo que está dentro de clientes e passar em um array para a view
+        // O código compact(['clientes']) é o mesmo que passar ['clientes' => $this->clientes]
         return view('clientes.index', compact(['clientes']));
     }
 
@@ -33,7 +38,7 @@ class ClienteControlador extends Controller
      */
     public function create()
     {
-        //
+        return view('clientes.create');
     }
 
     /**
@@ -44,7 +49,19 @@ class ClienteControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $clientes = session('clientes');
+        $ids = array_column($clientes, 'id');
+        $id = end($ids) + 1;
+        $nome = $request->nome;
+        $dados = ["id" => $id, "nome" => $nome];
+        $clientes[] = $dados;
+        // dd($clientes);
+        session(['clientes' => $clientes]);
+        return redirect()->route('clientes.index');
+
+        // Para ver todos os dados da request, bem como a estrutura dela
+        // $dados = $request->all();
+        // dd($dados);
     }
 
     /**
@@ -55,7 +72,10 @@ class ClienteControlador extends Controller
      */
     public function show($id)
     {
-        //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+        $cliente = $clientes[$index];
+        return view('clientes.show', compact(['cliente']));
     }
 
     /**
@@ -66,7 +86,10 @@ class ClienteControlador extends Controller
      */
     public function edit($id)
     {
-        //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+        $cliente = $clientes[$index];
+        return view('clientes.edit', compact(['cliente']));
     }
 
     /**
@@ -78,7 +101,11 @@ class ClienteControlador extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+        $clientes[$index]['nome'] = $request->nome;
+        session(['clientes' => $clientes]);
+        return redirect()->route('clientes.index');
     }
 
     /**
@@ -89,6 +116,18 @@ class ClienteControlador extends Controller
      */
     public function destroy($id)
     {
-        //
+        $clientes = session('clientes');
+        $index = $this->getIndex($id, $clientes);
+        array_splice($clientes, $index, 1);
+        session(['clientes' => $clientes]);
+
+        return redirect()->route('clientes.index');
+    }
+
+    private function getIndex($id, $clientes)
+    {
+        $ids = array_column($clientes, 'id');
+        $index = array_search($id, $ids);
+        return $index;
     }
 }
