@@ -1,5 +1,7 @@
 @extends('layouts.principal')
 
+@section('titulo', 'Clientes')
+
 @section('conteudo')
     <h3>{{ $titulo }}</h3>
     <a href="{{ route('clientes.create') }}"> Novo cliente</a>
@@ -20,6 +22,32 @@
                 </li>
             @endforeach
         </ul>
+
+        <hr>
+        @for ($i = 0; $i < 10; $i++)
+            {{ $i }},
+        @endfor
+        <br>
+        @for ($i = 0; $i < count($clientes); $i++)
+            {{ $clientes[$i]['nome'] }},
+        @endfor
+        <br>
+
+
+        @foreach ($clientes as $cli)
+            <p>
+                {{ $cli['nome'] }} |
+                @if ($loop->first)
+                    (primeiro)
+                    |
+                @endif
+                @if ($loop->last)
+                    (ultimo)
+                    |
+                @endif
+                ({{ $loop->index }}) - {{ $loop->iteration }} / {{ $loop->count }}
+            </p>
+        @endforeach
     @endif
 
     {{-- O código abaixo substitui a necessidade do else --}}
