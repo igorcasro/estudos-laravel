@@ -1,9 +1,13 @@
-<h3>Novo cliente</h3>
+@extends('layouts.principal')
 
-<form action="{{ route('clientes.store') }}" method="POST">
-    @csrf
-    <input type="text" name="nome">
-    <input type="submit" value="Salvar">
-</form>
+@section('conteudo')
+    <h3>Novo cliente</h3>
 
-<a href="{{ route('clientes.index') }}">Voltar</a>
+    <form action="{{ route('clientes.store') }}" method="POST">
+        @csrf
+        <input type="text" name="nome">
+        <input type="submit" value="Salvar">
+    </form>
+
+    <a href="{{ route('clientes.index') }}">Voltar</a>
+@endsection

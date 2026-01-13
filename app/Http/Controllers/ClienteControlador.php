@@ -28,7 +28,11 @@ class ClienteControlador extends Controller
         $clientes = session('clientes');
         // A utilização do compact é para compactar tudo que está dentro de clientes e passar em um array para a view
         // O código compact(['clientes']) é o mesmo que passar ['clientes' => $this->clientes]
-        return view('clientes.index', compact(['clientes']));
+        // return view('clientes.index', compact(['clientes']));
+        // return view('clientes.index')
+        //     ->with('clientes', $clientes)
+        //     ->with('titulo', "Todos os clientes");
+        return view('clientes.index', ['clientes' => $clientes, 'titulo' => "Todos os clientes"]);
     }
 
     /**
