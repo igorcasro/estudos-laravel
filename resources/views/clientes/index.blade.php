@@ -23,31 +23,32 @@
             @endforeach
         </ul>
 
-        <hr>
-        @for ($i = 0; $i < 10; $i++)
-            {{ $i }},
-        @endfor
-        <br>
-        @for ($i = 0; $i < count($clientes); $i++)
-            {{ $clientes[$i]['nome'] }},
-        @endfor
-        <br>
-
-
-        @foreach ($clientes as $cli)
-            <p>
-                {{ $cli['nome'] }} |
-                @if ($loop->first)
-                    (primeiro)
-                    |
-                @endif
-                @if ($loop->last)
-                    (ultimo)
-                    |
-                @endif
-                ({{ $loop->index }}) - {{ $loop->iteration }} / {{ $loop->count }}
-            </p>
-        @endforeach
+        {{-- Seção somente para maneiras distintas de recuperação de dados --}}
+        {{-- <hr> --}}
+        {{-- @for ($i = 0; $i < 10; $i++) --}}
+        {{-- {{ $i }}, --}}
+        {{-- @endfor --}}
+        {{-- <br> --}}
+        {{-- @for ($i = 0; $i < count($clientes); $i++) --}}
+        {{-- {{ $clientes[$i]['nome'] }}, --}}
+        {{-- @endfor --}}
+        {{-- <br> --}}
+        {{--  --}}
+        {{--  --}}
+        {{-- @foreach ($clientes as $cli) --}}
+        {{-- <p> --}}
+        {{-- {{ $cli['nome'] }} | --}}
+        {{-- @if ($loop->first) --}}
+        {{-- (primeiro) --}}
+        {{-- | --}}
+        {{-- @endif --}}
+        {{-- @if ($loop->last) --}}
+        {{-- (ultimo) --}}
+        {{-- | --}}
+        {{-- @endif --}}
+        {{-- ({{ $loop->index }}) - {{ $loop->iteration }} / {{ $loop->count }} --}}
+        {{-- </p> --}}
+        {{-- @endforeach --}}
     @endif
 
     {{-- O código abaixo substitui a necessidade do else --}}
