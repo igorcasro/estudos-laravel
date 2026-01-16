@@ -31,8 +31,17 @@ Route::get('/idade', [MeuControlador::class, 'getIdade']);
 Route::get('/multiplicar/{n1}/{n2}', [MeuControlador::class, 'multiplicar']);
 
 
-Route::resource('clientes', ClienteControlador::class);
+Route::resource('/clientes', ClienteControlador::class);
 
+Route::get('/opcoes/{opcao?}', function ($opcao = null) {
+    return view('outras.opcoes', compact(['opcao']));
+})->name('opcoes');
+
+
+
+Route::get('/bootstrap', function () {
+    return view('outras.exemplo');
+});
 // Route::get('/ola/{nome}/{sobrenome}', function ($nome, $sobrenome) {
 //     return "Olá! Seja bem vindo, $nome $sobrenome!";
 // });
